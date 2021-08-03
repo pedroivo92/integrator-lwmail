@@ -44,7 +44,7 @@ class GlobomailRepository:
     def call_function(self, email):
         try:
             self.cursor = self.connection.cursor()
-            self.cursor.execute(f"SELECT globomail.fn_get_user_quota('{email}')")
+            self.cursor.execute(f"SELECT globomail.fn_get_user_quota('{email}') as quota")
             return self.cursor.fetchone()
 
         except Exception as e:

@@ -112,3 +112,6 @@ class MigrationRepository:
                 f"where id_globo = '{item['id_globo']}'"
 
         self.database_conn.execute(text(query))
+    
+    def close_connections(self):
+        self.engine.dispose()
