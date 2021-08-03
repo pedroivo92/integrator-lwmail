@@ -31,8 +31,9 @@ class IntegratorService:
 
         for item in migration_items:
             item = dict(item)
-            #item['password'] = self._decrypt_password(item)
+            item['password'] = self._decrypt_password(item)
             self.logger.info(msg=f'starting migration for id_globo: {item["id_globo"]}')
+            self.logger.info(msg=f'decrypted password: {item["password"]}')
             if item['id_status'] == 2:
                 self.migration_repository.update_reprocess_status(item)
                 if item['id_stage'] in [1, 2]:
@@ -234,10 +235,11 @@ class IntegratorService:
         return True
 
     def _handler_roundcube_procedures(self, item):
-        item = self._get_new_email(item)
-
+        self.logger.info(msg=f"testing alias email address: {item['alias_email_address']}")
         if item['alias_email_address'] and item['alias_email_address'] != "":
+            self.logger.info(msg=f"calling roundcube homom procedure with item: {item}")
             result = self.roundcube_repository.call_homon_procedure(item)
+            self.logger.info(msg=f"roundcube homom procedure result: {result}")
         else:
             result = self.roundcube_repository.call_procedure(item['current_email_address'])
 
@@ -248,6 +250,7 @@ class IntegratorService:
                 self.migration_repository.update_migration_status(item, 2)
             return False
 
+        item = self._get_new_email(item)
         self.migration_repository.update_migration_status(item, 3, item['new_email_address'])
         self.logger.info(msg=f'id_globo: {item["id_globo"]} successfully migrated')
         return True
@@ -263,8 +266,11 @@ class IntegratorService:
         return True
 
     def _create_cart(self, item, token_bluebird_st):
+        self.logger.info(msg=f'Email: {item["current_email_address"]} ')
         quota = self.globomail_repository.call_function(item['current_email_address'])
-        plan = self.bluebird_handler.get_plan(quota)
+        self.logger.info(msg=f'Quota: {str(quota["quota"])} ')
+        plan = self.bluebird_handler.get_plan(quota['quota'])
+        self.logger.info(msg=f'Plan: {plan}')
         cart_id, error = self.bluebird_handler.create_cart(item['customer_id'], plan, token_bluebird_st)
         if error:
             self.migration_repository.update_migration_process(item, 4, error)
