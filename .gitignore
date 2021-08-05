@@ -142,8 +142,5 @@ cython_debug/
 .vscode/*
 .idea/*
 
-#logs
-logs/*
-
 #database
 *.sql
