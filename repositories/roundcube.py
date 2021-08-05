@@ -40,3 +40,6 @@ class RoundcubeRepository:
             raise e
         finally:
             self.cursor.close()
+    
+    def close_connections(self):
+        self.connection.close()

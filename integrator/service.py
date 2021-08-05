@@ -27,136 +27,109 @@ class IntegratorService:
 
     def handler_migrations(self):
         self.logger.info(msg='starting integration process for new email migrations')
-        migration_items = self.migration_repository.get_pending_migrations()
+        try:
+            migration_items = self.migration_repository.get_pending_migrations()
+            for item in migration_items:
+                item = dict(item)
+                item['password'] = self._decrypt_password(item)
+                self.logger.info(msg=f'starting migration for id_globo: {item["id_globo"]}')
+                if item['id_status'] == 2:
+                    self.migration_repository.update_reprocess_status(item)
+                    if item['id_stage'] in [1, 2]:
+                        customer_info = self._handler_capi_process(item)
+                        if not customer_info:
+                            return False
 
-        for item in migration_items:
-            item = dict(item)
-            item['password'] = self._decrypt_password(item)
-            self.logger.info(msg=f'starting migration for id_globo: {item["id_globo"]}')
-            if item['id_status'] == 2:
-                self.migration_repository.update_reprocess_status(item)
-                if item['id_stage'] in [1, 2]:
-                    customer_info = self._handler_capi_process(item)
-                    if not customer_info:
-                        self.migration_repository.close_connections()
-                        return False
+                        sucess = self._handler_bluebird_process(item, customer_info)
+                        if not sucess:
+                            return False
 
-                    sucess = self._handler_bluebird_process(item, customer_info)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        sucess = self._handler_akako_process(item)
+                        if not sucess:
+                            return False
 
-                    sucess = self._handler_akako_process(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        sucess = self._handler_globomail_procedures(item)
+                        if not sucess:
+                            return False
 
-                    sucess = self._handler_globomail_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
+                            
+                        return True
+                    elif item['id_stage'] in [3, 4, 5]:
+                        sucess = self._handler_bluebird_process(item)
+                        if not sucess:
+                            return False
 
-                    sucess = self._handler_roundcube_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        sucess = self._handler_akako_process(item)
+                        if not sucess:
+                            return False
+
+                        sucess = self._handler_globomail_procedures(item)
+                        if not sucess:
+                            return False
+
+                        sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
+                            
+                        return True
+                    elif item['id_stage'] == 6:
+                        sucess = self._handler_akako_process(item)
+                        if not sucess:
+                            return False
+
+                        sucess = self._handler_globomail_procedures(item)
+                        if not sucess:
+                            return False
+
+                        sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
                         
-                    self.migration_repository.close_connections()
-                    return True
-                elif item['id_stage'] in [3, 4, 5]:
-                    sucess = self._handler_bluebird_process(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        return True
+                    elif item['id_stage'] == 7:
+                        sucess = self._handler_globomail_procedures(item)
+                        if not sucess:
+                            return False
 
-                    sucess = self._handler_akako_process(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
-
-                    sucess = self._handler_globomail_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
-
-                    sucess = self._handler_roundcube_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
                         
-                    self.migration_repository.close_connections()
-                    return True
-                elif item['id_stage'] == 6:
-                    sucess = self._handler_akako_process(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                        return True
+                    elif item['id_stage'] == 8:
+                        sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
+                        
+                        return True
 
-                    sucess = self._handler_globomail_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                item.update({'id_stage': 3})
+                customer_info = self._handler_capi_process(item)
+                if not customer_info:
+                    return False
 
-                    sucess = self._handler_roundcube_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
-                    
-                    self.migration_repository.close_connections()
-                    return True
-                elif item['id_stage'] == 7:
-                    sucess = self._handler_globomail_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
+                sucess = self._handler_bluebird_process(item, customer_info)
+                if not sucess:
+                    return False
 
-                    sucess = self._handler_roundcube_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
-                    
-                    self.migration_repository.close_connections()
-                    return True
-                elif item['id_stage'] == 8:
-                    sucess = self._handler_roundcube_procedures(item)
-                    if not sucess:
-                        self.migration_repository.close_connections()
-                        return False
-                    
-                    self.migration_repository.close_connections()
-                    return True
+                sucess = self._handler_akako_process(item)
+                if not sucess:
+                    return False
 
-            item.update({'id_stage': 3})
-            customer_info = self._handler_capi_process(item)
-            if not customer_info:
-                self.migration_repository.close_connections()
-                return False
+                sucess = self._handler_globomail_procedures(item)
+                if not sucess:
+                    return False
 
-            sucess = self._handler_bluebird_process(item, customer_info)
-            if not sucess:
-                self.migration_repository.close_connections()
-                return False
+                sucess = self._handler_roundcube_procedures(item)
+                if not sucess:
+                    return False
 
-            sucess = self._handler_akako_process(item)
-            if not sucess:
-                self.migration_repository.close_connections()
-                return False
-
-            sucess = self._handler_globomail_procedures(item)
-            if not sucess:
-                self.migration_repository.close_connections()
-                return False
-
-            sucess = self._handler_roundcube_procedures(item)
-            if not sucess:
-                self.migration_repository.close_connections()
-                return False
-
-            self.migration_repository.close_connections()
-            return True
-        
-        self.migration_repository.close_connections()
-
+                return True   
+        finally:
+            self._close_connections()
 
     def _get_cached_token(self, service_name):
         token_st = None
@@ -325,3 +298,10 @@ class IntegratorService:
     def _decrypt_password(self, item):
         cipher_pass = self.encrypt_session.decrypt(item['password'].encode('utf8'))
         return cipher_pass.decode('utf8')
+    
+    def _close_connections():
+        self.migration_repository.close_connections()
+        self.roundcube_repository.close_connections()
+        self.globomail_repository.close_connections()
+
+
