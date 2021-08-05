@@ -299,7 +299,7 @@ class IntegratorService:
         cipher_pass = self.encrypt_session.decrypt(item['password'].encode('utf8'))
         return cipher_pass.decode('utf8')
     
-    def _close_connections():
+    def _close_connections(self):
         self.migration_repository.close_connections()
         self.roundcube_repository.close_connections()
         self.globomail_repository.close_connections()
