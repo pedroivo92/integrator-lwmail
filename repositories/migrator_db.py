@@ -38,6 +38,18 @@ class MigrationRepository:
         finally:
             self.database_conn.close()
 
+    def get_emails(self, item_migration):
+        self.database_conn = self.engine.connect()
+        try:
+            query = "email_address from integratordb.email " \
+                    f"where id_migration = '{item_migration['id_globo']}'"
+            emails = self.database_conn.execute(select(text(query))).fetchall()
+
+            return emails
+        except Exception as e:
+            raise e
+        finally:
+            self.database_conn.close()
 
     def get_customer_informations(self, item_migration):
         self.database_conn = self.engine.connect()

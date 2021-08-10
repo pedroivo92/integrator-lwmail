@@ -15,25 +15,16 @@ class AuthRepository:
 
     def generate_token_tgt(self, service_name):
         token_tgt_name = self._get_token_tgt_name(service_name)
-        #token_tgt = self.cache_connection.get_info(token_tgt_name)
         token_tgt = None
         if not token_tgt:
             token_tgt = self._generate_cas_tgt()
-            #self.cache_connection.set_info(
-            #    token_info=self._get_cache_info(token_tgt_name, token_tgt, 180)
-            #)
 
         return token_tgt
 
     def generate_token_st(self, token_tgt, service_name):
-        token_st_name = self._get_token_name(service_name)
-        #token_st = self.cache_connection.get_info(token_st_name)
         token_st = None
         if not token_st:
             token_st = self._generate_cas_st(token_tgt, service_name)
-            #self.cache_connection.set_info(
-            #    token_info=self._get_cache_info(token_st_name, token_st, 30)
-            #)
 
         return token_st
 
@@ -69,16 +60,6 @@ class AuthRepository:
             "token_value": value,
             "token_expire": expire
         }
-
-    def _get_token_name(self, service_name):
-        if service_name == str(AUTH_SERVICE_CAPI):
-            return 'token_ts_capi'
-
-        if service_name == str(AUTH_SERVICE_BLUEBIRD):
-            return 'token_ts_bluebird'
-
-        if service_name == str(AUTH_SERVICE_AKAKO):
-            return 'token_ts_akako'
 
     def _get_token_tgt_name(self, service_name):
         if service_name == str(AUTH_SERVICE_AKAKO):

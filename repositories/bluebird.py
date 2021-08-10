@@ -56,39 +56,40 @@ class BluebirdHandler:
         return True, None
 
     def get_plan(self, quota):
-        plan = {}
-        if quota in range(0,20480):
-            plan = {
+        if quota in range(0, 20481):
+            return {
                 "plan_id": 'b7c48522-a5b6-4de9-ae2e-78aaaec9d02f',
                 "plan_value": 1.00
             }
-        elif quota in range(20481, 40960):
-            plan = {
+
+        if quota in range(20481, 40961):
+            return {
                 "plan_id": '2fcff535-553d-4b61-955a-4693181678c5',
                 "plan_value": 2.00
             }
-        elif quota in range(40961, 61440):
-            plan = {
+        
+        if quota in range(40961, 61441):
+            return {
                 "plan_id": '42546dd2-f736-4604-a19d-28115cc8ebe7',
                 "plan_value": 3.50
             }
-        elif quota in range(61441, 81920):
-            plan = {
+
+        if quota in range(61441, 81921):
+            return {
                 "plan_id": '6360640a-4648-4885-910c-d0ec95480da8',
                 "plan_value": 4.50
             }
-        elif quota in range(81921, 102400):
-            plan = {
+        
+        if quota in range(81921, 102401):
+            return {
                 "plan_id": '8f2fb04d-96f9-44d1-85fb-d3592da625fe',
                 "plan_value": 5.50
             }
-        else:
-            plan = {
-                "plan_id": 'e2e9f180-655f-4385-b54e-992ff86a8bfe',
-                "plan_value": 10.00
-            }
-
-        return plan
+        
+        return {
+            "plan_id": 'e2e9f180-655f-4385-b54e-992ff86a8bfe',
+            "plan_value": 10.00
+        }
 
     def _create_payment_payload(self):
         return {
