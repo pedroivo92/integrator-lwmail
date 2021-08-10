@@ -8,6 +8,7 @@ from repositories.authentication import AuthRepository
 from repositories.capi import CapiHandler
 from repositories.bluebird import BluebirdHandler
 from repositories.akako import AkakoHandler
+from repositories.notification import NotificationHandler
 from settings import *
 
 
@@ -23,6 +24,7 @@ class IntegratorService:
         self.capi_handler = CapiHandler(self.logger)
         self.bluebird_handler = BluebirdHandler(self.logger)
         self.akako_handler = AkakoHandler(self.logger)
+        self.notification_handler = NotificationHandler(self.logger)
         self.encrypt_session = Fernet(APPLICATION_SECRETS.encode('utf8'))
 
     def handler_migrations(self):
@@ -40,6 +42,7 @@ class IntegratorService:
                         if not customer_info:
                             return False
 
+                        item.update({'login': customer_info['login']})
                         sucess = self._handler_bluebird_process(item, customer_info)
                         if not sucess:
                             return False
@@ -53,6 +56,10 @@ class IntegratorService:
                             return False
 
                         sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
+                        
+                        sucess = self._handler_notification_process(item)
                         if not sucess:
                             return False
                             
@@ -73,6 +80,10 @@ class IntegratorService:
                         sucess = self._handler_roundcube_procedures(item)
                         if not sucess:
                             return False
+                        
+                        sucess = self._handler_notification_process(item)
+                        if not sucess:
+                            return False
                             
                         return True
                     elif item['id_stage'] == 6:
@@ -88,6 +99,10 @@ class IntegratorService:
                         if not sucess:
                             return False
                         
+                        sucess = self._handler_notification_process(item)
+                        if not sucess:
+                            return False
+                        
                         return True
                     elif item['id_stage'] == 7:
                         sucess = self._handler_globomail_procedures(item)
@@ -98,9 +113,23 @@ class IntegratorService:
                         if not sucess:
                             return False
                         
+                        sucess = self._handler_notification_process(item)
+                        if not sucess:
+                            return False
+                        
                         return True
                     elif item['id_stage'] == 8:
                         sucess = self._handler_roundcube_procedures(item)
+                        if not sucess:
+                            return False
+                        
+                        sucess = self._handler_notification_process(item)
+                        if not sucess:
+                            return False
+                        
+                        return True
+                    elif item['id_stage'] == 9:
+                        sucess = self._handler_notification_process(item)
                         if not sucess:
                             return False
                         
@@ -111,6 +140,7 @@ class IntegratorService:
                 if not customer_info:
                     return False
 
+                item.update({'login': customer_info['login']})
                 sucess = self._handler_bluebird_process(item, customer_info)
                 if not sucess:
                     return False
@@ -124,6 +154,10 @@ class IntegratorService:
                     return False
 
                 sucess = self._handler_roundcube_procedures(item)
+                if not sucess:
+                    return False
+                
+                sucess = self._handler_notification_process(item)
                 if not sucess:
                     return False
 
@@ -219,6 +253,22 @@ class IntegratorService:
             return False
 
         return True
+    
+    def _handler_notification_process(self, item):
+        emails = self.migration_repository.get_emails(item)
+        token_st = self._get_cached_token(str(AUTH_SERVICE_NOTIFICATION))
+        sucess, error = self.notification_handler.notification_service(token_st, item, emails)
+        if not sucess:
+            self.migration_repository.update_migration_process(item, 9, error)
+            if item['id_status'] != 2:
+                self.migration_repository.update_migration_status(item, 2)
+            return False
+        
+        item = self._get_new_email(item)
+        self.migration_repository.update_migration_status(item, 3, item['new_email_address'])
+        self.logger.info(msg=f'id_globo: {item["id_globo"]} successfully migrated')
+
+        return True
 
     def _handler_globomail_procedures(self, item):
         if item['alias_email_address'] and item['alias_email_address'] != "":
@@ -248,9 +298,6 @@ class IntegratorService:
                 self.migration_repository.update_migration_status(item, 2)
             return False
 
-        item = self._get_new_email(item)
-        self.migration_repository.update_migration_status(item, 3, item['new_email_address'])
-        self.logger.info(msg=f'id_globo: {item["id_globo"]} successfully migrated')
         return True
 
     def _create_payment_method(self, item, token_bluebird_st):
@@ -265,7 +312,13 @@ class IntegratorService:
 
     def _create_cart(self, item, token_bluebird_st):
         quota = self.globomail_repository.call_function(item['current_email_address'])
+        
+        self.logger.info(msg=f'quota - {quota["quota"]}')
+
         plan = self.bluebird_handler.get_plan(quota['quota'])
+
+        self.logger.info(msg=f'plan - {plan}')
+
         cart_id, error = self.bluebird_handler.create_cart(item['customer_id'], plan, token_bluebird_st)
         if error:
             self.migration_repository.update_migration_process(item, 4, error)
