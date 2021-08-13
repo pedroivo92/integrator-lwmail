@@ -313,11 +313,7 @@ class IntegratorService:
     def _create_cart(self, item, token_bluebird_st):
         quota = self.globomail_repository.call_function(item['current_email_address'])
         
-        self.logger.info(msg=f'quota - {quota["quota"]}')
-
         plan = self.bluebird_handler.get_plan(quota['quota'])
-
-        self.logger.info(msg=f'plan - {plan}')
 
         cart_id, error = self.bluebird_handler.create_cart(item['customer_id'], plan, token_bluebird_st)
         if error:
