@@ -10,7 +10,7 @@ class RoundcubeRepository:
         self.password = ROUNDCUBE_DB_PASSWORD
         self.database = ROUNDCUBE_DB_NAME
         self.connection = pymysql.connect(host=self.hostname, user=self.username, password=self.password,
-                                          database=self.database, charset='utf8mb4',
+                                          database=self.database, charset='utf8mb4', connect_timeout=int(DATABASE_CONNECTION_TIMEOUT),
                                           cursorclass=pymysql.cursors.DictCursor)
 
     def call_procedure(self, email):

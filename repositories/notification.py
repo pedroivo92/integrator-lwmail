@@ -15,7 +15,7 @@ class NotificationHandler:
         payload = self._create_notification_payload(item, emails)
         self.logger.info(msg=f'sending notification: {payload} to {self.url} with headers: {header}, timeout: {NOTIFICATION_TIMEOUT}')
         try:
-            response = requests.post(self.url, json=payload, headers=header, verify=False, timeout=60)
+            response = requests.post(self.url, json=payload, headers=header, verify=False, timeout=int(NOTIFICATION_TIMEOUT))
             response.raise_for_status()
 
         except requests.exceptions.HTTPError as e:
