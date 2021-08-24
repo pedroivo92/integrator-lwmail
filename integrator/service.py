@@ -16,9 +16,17 @@ class IntegratorService:
 
     def __init__(self, logger):
         self.logger = logger
+        self.logger.info(msg=f'INICIANDO SETUP INTEGRATOR')
+
         self.migration_repository = MigrationRepository()
+        self.logger.info(msg=f'CONNECTED MIGRATION REPOSITORY: {self.migration_repository} ')
+
         self.globomail_repository = GlobomailRepository()
+        self.logger.info(msg=f'CONNECTED GLOBOMAIL REPOSITORY: {self.globomail_repository} ')
+
         self.roundcube_repository = RoundcubeRepository()
+        self.logger.info(msg=f'CONNECTED ROUNDCUBE REPOSITORY: {self.roundcube_repository} ')
+
         self.authenticator = AuthRepository(AUTH_USER, AUTH_PASSWORD, AUTH_URL, self.logger)
         self.authenticator_akako = AuthRepository(AUTH_USER_AKAKO, AUTH_PASSWORD_AKAKO, AUTH_URL_AKAKO, self.logger)
         self.capi_handler = CapiHandler(self.logger)
