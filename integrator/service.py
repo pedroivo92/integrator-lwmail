@@ -40,128 +40,128 @@ class IntegratorService:
                     if item['id_stage'] in [1, 2]:
                         customer_info = self._handler_capi_process(item)
                         if not customer_info:
-                            return False
+                            continue
 
                         item.update({'login': customer_info['login']})
                         sucess = self._handler_bluebird_process(item, customer_info)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_akako_process(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_globomail_procedures(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_roundcube_procedures(item)
                         if not sucess:
-                            return False
+                            continue
                         
                         sucess = self._handler_notification_process(item)
                         if not sucess:
-                            return False
+                            continue
                             
-                        return True
+                        continue
                     elif item['id_stage'] in [3, 4, 5]:
                         sucess = self._handler_bluebird_process(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_akako_process(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_globomail_procedures(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_roundcube_procedures(item)
                         if not sucess:
-                            return False
+                            continue
                         
                         sucess = self._handler_notification_process(item)
                         if not sucess:
-                            return False
+                            continue
                             
-                        return True
+                        continue
                     elif item['id_stage'] == 6:
                         sucess = self._handler_akako_process(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_globomail_procedures(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_roundcube_procedures(item)
                         if not sucess:
-                            return False
+                            continue
                         
                         sucess = self._handler_notification_process(item)
                         if not sucess:
-                            return False
+                            continue
                         
-                        return True
+                        continue
                     elif item['id_stage'] == 7:
                         sucess = self._handler_globomail_procedures(item)
                         if not sucess:
-                            return False
+                            continue
 
                         sucess = self._handler_roundcube_procedures(item)
                         if not sucess:
-                            return False
+                            continue
                         
                         sucess = self._handler_notification_process(item)
                         if not sucess:
-                            return False
+                            continue
                         
-                        return True
+                        continue
                     elif item['id_stage'] == 8:
                         sucess = self._handler_roundcube_procedures(item)
                         if not sucess:
-                            return False
+                            continue
                         
                         sucess = self._handler_notification_process(item)
                         if not sucess:
-                            return False
+                            continue
                         
-                        return True
+                        continue
                     elif item['id_stage'] == 9:
                         sucess = self._handler_notification_process(item)
                         if not sucess:
-                            return False
+                            continue
                         
-                        return True
+                        continue
 
                 item.update({'id_stage': 3})
                 customer_info = self._handler_capi_process(item)
                 if not customer_info:
-                    return False
+                    continue
 
                 item.update({'login': customer_info['login']})
                 sucess = self._handler_bluebird_process(item, customer_info)
                 if not sucess:
-                    return False
+                    continue
 
                 sucess = self._handler_akako_process(item)
                 if not sucess:
-                    return False
+                    continue
 
                 sucess = self._handler_globomail_procedures(item)
                 if not sucess:
-                    return False
+                    continue
 
                 sucess = self._handler_roundcube_procedures(item)
                 if not sucess:
-                    return False
+                    continue
                 
                 sucess = self._handler_notification_process(item)
                 if not sucess:
-                    return False
+                    continue
 
-                return True   
+                continue   
         finally:
             self._close_connections()
 
