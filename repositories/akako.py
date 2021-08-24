@@ -20,8 +20,8 @@ class AkakoHandler:
             response = requests.post(create_customer_url, json=payload, headers=header, timeout=int(AKAKO_TIMEOUT))
             response.raise_for_status()
 
-        except requests.exceptions.HTTPError as e:
-            error = e.response.text
+        except requests.exceptions.RequestException as e:
+            error = str(e)
             self.logger.error(msg=error)
             return False, error
 
