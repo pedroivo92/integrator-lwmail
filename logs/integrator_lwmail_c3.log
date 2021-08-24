@@ -1,50 +1,18 @@
-2021-08-24 14:20:35,548 - INFO - starting integration process for new email migrations
-2021-08-24 14:21:37,778 - INFO - starting integration process for new email migrations
-2021-08-24 14:22:39,037 - INFO - starting integration process for new email migrations
-2021-08-24 14:23:40,420 - INFO - starting integration process for new email migrations
-2021-08-24 14:24:41,823 - INFO - starting integration process for new email migrations
-2021-08-24 14:25:43,292 - INFO - starting integration process for new email migrations
-2021-08-24 14:26:44,618 - INFO - starting integration process for new email migrations
-2021-08-24 14:27:46,160 - INFO - starting integration process for new email migrations
-2021-08-24 14:28:47,363 - INFO - starting integration process for new email migrations
-2021-08-24 14:29:48,682 - INFO - starting integration process for new email migrations
-2021-08-24 14:30:50,014 - INFO - starting integration process for new email migrations
-2021-08-24 14:31:51,402 - INFO - starting integration process for new email migrations
-2021-08-24 14:32:52,671 - INFO - starting integration process for new email migrations
-2021-08-24 14:33:54,010 - INFO - starting integration process for new email migrations
-2021-08-24 14:34:55,616 - INFO - starting integration process for new email migrations
-2021-08-24 14:35:56,962 - INFO - starting integration process for new email migrations
-2021-08-24 14:36:58,282 - INFO - starting integration process for new email migrations
-2021-08-24 14:37:59,627 - INFO - starting integration process for new email migrations
-2021-08-24 14:39:00,955 - INFO - starting integration process for new email migrations
-2021-08-24 14:40:02,350 - INFO - starting integration process for new email migrations
-2021-08-24 14:41:03,640 - INFO - starting integration process for new email migrations
-2021-08-24 14:42:04,920 - INFO - starting integration process for new email migrations
-2021-08-24 14:43:06,326 - INFO - starting integration process for new email migrations
-2021-08-24 14:44:07,652 - INFO - starting integration process for new email migrations
-2021-08-24 14:45:08,994 - INFO - starting integration process for new email migrations
-2021-08-24 14:46:10,300 - INFO - starting integration process for new email migrations
-2021-08-24 14:47:11,694 - INFO - starting integration process for new email migrations
-2021-08-24 14:48:13,060 - INFO - starting integration process for new email migrations
-2021-08-24 14:49:14,447 - INFO - starting integration process for new email migrations
-2021-08-24 14:50:15,786 - INFO - starting integration process for new email migrations
-2021-08-24 14:51:17,197 - INFO - starting integration process for new email migrations
-2021-08-24 14:52:18,473 - INFO - starting integration process for new email migrations
-2021-08-24 14:53:19,816 - INFO - starting integration process for new email migrations
-2021-08-24 14:54:21,069 - INFO - starting integration process for new email migrations
-2021-08-24 14:55:22,317 - INFO - starting integration process for new email migrations
-2021-08-24 14:58:14,013 - INFO - INICIANDO SETUP INTEGRATOR
-2021-08-24 14:58:14,063 - INFO - CONNECTED MIGRATION REPOSITORY: <repositories.migrator_db.MigrationRepository object at 0xffff8ff1bb20> 
-2021-08-24 14:58:14,230 - INFO - CONNECTED GLOBOMAIL REPOSITORY: <repositories.globomail.GlobomailRepository object at 0xffff8ff1bbe0> 
-2021-08-24 14:58:14,414 - INFO - CONNECTED ROUNDCUBE REPOSITORY: <repositories.roundcube.RoundcubeRepository object at 0xffff8fd979d0> 
-2021-08-24 14:58:14,460 - INFO - starting integration process for new email migrations
-2021-08-24 14:59:15,288 - INFO - INICIANDO SETUP INTEGRATOR
-2021-08-24 14:59:15,306 - INFO - CONNECTED MIGRATION REPOSITORY: <repositories.migrator_db.MigrationRepository object at 0xffff8ff1b970> 
-2021-08-24 14:59:15,487 - INFO - CONNECTED GLOBOMAIL REPOSITORY: <repositories.globomail.GlobomailRepository object at 0xffff8fd97d30> 
-2021-08-24 14:59:15,663 - INFO - CONNECTED ROUNDCUBE REPOSITORY: <repositories.roundcube.RoundcubeRepository object at 0xffff8fd97e20> 
-2021-08-24 14:59:15,672 - INFO - starting integration process for new email migrations
-2021-08-24 15:00:16,467 - INFO - INICIANDO SETUP INTEGRATOR
-2021-08-24 15:00:16,483 - INFO - CONNECTED MIGRATION REPOSITORY: <repositories.migrator_db.MigrationRepository object at 0xffff8ff1bbe0> 
-2021-08-24 15:00:16,654 - INFO - CONNECTED GLOBOMAIL REPOSITORY: <repositories.globomail.GlobomailRepository object at 0xffff8fdae430> 
-2021-08-24 15:00:16,830 - INFO - CONNECTED ROUNDCUBE REPOSITORY: <repositories.roundcube.RoundcubeRepository object at 0xffff8fdae250> 
-2021-08-24 15:00:16,838 - INFO - starting integration process for new email migrations
+2021-08-24 16:16:21,706 - INFO - -----SETUP INTEGRATOR_LWMAIL----
+2021-08-24 16:16:21,728 - INFO - CONNECTED TO MIGRATION REPOSITORY: <repositories.migrator_db.MigrationRepository object at 0xffffaf137af0> 
+2021-08-24 16:16:21,895 - INFO - CONNECTED TO GLOBOMAIL REPOSITORY: <repositories.globomail.GlobomailRepository object at 0xffffaf137bb0> 
+2021-08-24 16:16:22,056 - INFO - CONNECTED TO ROUNDCUBE REPOSITORY: <repositories.roundcube.RoundcubeRepository object at 0xffffaef379a0> 
+2021-08-24 16:16:22,085 - INFO - -----ENDING SETUP INTEGRATOR_LWMAIL----
+2021-08-24 16:16:22,086 - INFO - starting integration process for new email migrations
+2021-08-24 16:16:22,674 - INFO - CLOSED MIGRATION REPOSITORY CONNECTION
+2021-08-24 16:16:22,676 - INFO - CLOSED GLOBOMAIL REPOSITORY CONNECTION
+2021-08-24 16:16:22,679 - INFO - CLOSED ROUNDCUBE REPOSITORY CONNECTION
+2021-08-24 16:17:22,948 - INFO - -----SETUP INTEGRATOR_LWMAIL----
+2021-08-24 16:17:22,968 - INFO - CONNECTED TO MIGRATION REPOSITORY: <repositories.migrator_db.MigrationRepository object at 0xffffaf137940> 
+2021-08-24 16:17:24,187 - INFO - CONNECTED TO GLOBOMAIL REPOSITORY: <repositories.globomail.GlobomailRepository object at 0xffffaef37fd0> 
+2021-08-24 16:17:24,378 - INFO - CONNECTED TO ROUNDCUBE REPOSITORY: <repositories.roundcube.RoundcubeRepository object at 0xffffaef37d90> 
+2021-08-24 16:17:24,386 - INFO - -----ENDING SETUP INTEGRATOR_LWMAIL----
+2021-08-24 16:17:24,388 - INFO - starting integration process for new email migrations
+2021-08-24 16:17:25,003 - INFO - CLOSED MIGRATION REPOSITORY CONNECTION
+2021-08-24 16:17:25,007 - INFO - CLOSED GLOBOMAIL REPOSITORY CONNECTION
+2021-08-24 16:17:25,013 - INFO - CLOSED ROUNDCUBE REPOSITORY CONNECTION

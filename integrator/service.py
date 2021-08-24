@@ -15,25 +15,34 @@ from settings import *
 class IntegratorService:
 
     def __init__(self, logger):
-        self.logger = logger
-        self.logger.info(msg=f'INICIANDO SETUP INTEGRATOR')
+        self.migration_repository = None
+        self.globomail_repository = None
+        self.roundcube_repository = None
+        try:
+            self.logger = logger
+            self.logger.info(msg=f'-----SETUP INTEGRATOR_LWMAIL----')
+            
+            self.migration_repository = MigrationRepository()
+            self.logger.info(msg=f'CONNECTED TO MIGRATION REPOSITORY: {self.migration_repository} ')
 
-        self.migration_repository = MigrationRepository()
-        self.logger.info(msg=f'CONNECTED MIGRATION REPOSITORY: {self.migration_repository} ')
+            self.globomail_repository = GlobomailRepository()
+            self.logger.info(msg=f'CONNECTED TO GLOBOMAIL REPOSITORY: {self.globomail_repository} ')
 
-        self.globomail_repository = GlobomailRepository()
-        self.logger.info(msg=f'CONNECTED GLOBOMAIL REPOSITORY: {self.globomail_repository} ')
+            self.roundcube_repository = RoundcubeRepository()
+            self.logger.info(msg=f'CONNECTED TO ROUNDCUBE REPOSITORY: {self.roundcube_repository} ')
 
-        self.roundcube_repository = RoundcubeRepository()
-        self.logger.info(msg=f'CONNECTED ROUNDCUBE REPOSITORY: {self.roundcube_repository} ')
+            self.authenticator = AuthRepository(AUTH_USER, AUTH_PASSWORD, AUTH_URL, self.logger)
+            self.authenticator_akako = AuthRepository(AUTH_USER_AKAKO, AUTH_PASSWORD_AKAKO, AUTH_URL_AKAKO, self.logger)
+            self.capi_handler = CapiHandler(self.logger)
+            self.bluebird_handler = BluebirdHandler(self.logger)
+            self.akako_handler = AkakoHandler(self.logger)
+            self.notification_handler = NotificationHandler(self.logger)
+            self.encrypt_session = Fernet(APPLICATION_SECRETS.encode('utf8'))
+            self.logger.info(msg=f'-----ENDING SETUP INTEGRATOR_LWMAIL----')
 
-        self.authenticator = AuthRepository(AUTH_USER, AUTH_PASSWORD, AUTH_URL, self.logger)
-        self.authenticator_akako = AuthRepository(AUTH_USER_AKAKO, AUTH_PASSWORD_AKAKO, AUTH_URL_AKAKO, self.logger)
-        self.capi_handler = CapiHandler(self.logger)
-        self.bluebird_handler = BluebirdHandler(self.logger)
-        self.akako_handler = AkakoHandler(self.logger)
-        self.notification_handler = NotificationHandler(self.logger)
-        self.encrypt_session = Fernet(APPLICATION_SECRETS.encode('utf8'))
+        except Exception as e:
+            self._close_connections()
+            raise e
 
     def handler_migrations(self):
         self.logger.info(msg='starting integration process for new email migrations')
@@ -357,8 +366,14 @@ class IntegratorService:
         return cipher_pass.decode('utf8')
     
     def _close_connections(self):
-        self.migration_repository.close_connections()
-        self.roundcube_repository.close_connections()
-        self.globomail_repository.close_connections()
+        if self.migration_repository:
+            self.migration_repository.close_connections()
+            self.logger.info(msg=f'CLOSED MIGRATION REPOSITORY CONNECTION')
 
+        if self.globomail_repository:
+            self.globomail_repository.close_connections()
+            self.logger.info(msg=f'CLOSED GLOBOMAIL REPOSITORY CONNECTION')
 
+        if self.roundcube_repository:
+            self.roundcube_repository.close_connections()
+            self.logger.info(msg=f'CLOSED ROUNDCUBE REPOSITORY CONNECTION')
