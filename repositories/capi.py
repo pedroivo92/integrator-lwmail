@@ -49,7 +49,7 @@ class CapiHandler:
     def create_custumer(self, token, payload):
         header = {'Service-Ticket': token}
         try:
-            create_customer_url = self.url + "/customers/xxx"
+            create_customer_url = self.url + "/customers"
             response = requests.post(create_customer_url, json=payload, headers=header, timeout=int(CAPI_TIMEOUT))
             response.raise_for_status()
 
