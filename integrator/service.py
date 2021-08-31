@@ -224,37 +224,37 @@ class IntegratorService:
 
         return customer_information
 
-    def _handler_bluebird_process(self, item, customer_info=None):
-        token_bluebird_st = self._get_cached_token(str(AUTH_SERVICE_BLUEBIRD))
-        if customer_info:
-            item.update({'customer_id': customer_info['customer_id']})
+    def _handler_bluebird_process(self, item, customer_info=None):        
+        # token_bluebird_st = self._get_cached_token(str(AUTH_SERVICE_BLUEBIRD))
+        # if customer_info:
+        #     item.update({'customer_id': customer_info['customer_id']})
 
-        if item['id_stage'] == 5:
-            sucess = self._checkout_cart(item, token_bluebird_st)
-            if not sucess:
-                return False
-        if item['id_stage'] == 4:
-            cart_id = self._create_cart(item, token_bluebird_st)
-            if not cart_id:
-                return False
+        # if item['id_stage'] == 5:
+        #     sucess = self._checkout_cart(item, token_bluebird_st)
+        #     if not sucess:
+        #         return False
+        # if item['id_stage'] == 4:
+        #     cart_id = self._create_cart(item, token_bluebird_st)
+        #     if not cart_id:
+        #         return False
 
-            item['cart_id'] = cart_id
-            sucess = self._checkout_cart(item, token_bluebird_st)
-            if not sucess:
-                return False
-        else:
-            sucess = self._create_payment_method(item, token_bluebird_st)
-            if not sucess:
-                return False
+        #     item['cart_id'] = cart_id
+        #     sucess = self._checkout_cart(item, token_bluebird_st)
+        #     if not sucess:
+        #         return False
+        # else:
+        #     sucess = self._create_payment_method(item, token_bluebird_st)
+        #     if not sucess:
+        #         return False
 
-            cart_id = self._create_cart(item, token_bluebird_st)
-            if not cart_id:
-                return False
+        #     cart_id = self._create_cart(item, token_bluebird_st)
+        #     if not cart_id:
+        #         return False
 
-            item['cart_id'] = cart_id
-            sucess = self._checkout_cart(item, token_bluebird_st)
-            if not sucess:
-                return False
+        #     item['cart_id'] = cart_id
+        #     sucess = self._checkout_cart(item, token_bluebird_st)
+        #     if not sucess:
+        #         return False
 
         return True
 
