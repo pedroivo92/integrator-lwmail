@@ -115,6 +115,9 @@ class MigrationRepository:
     def update_migration_process(self, item, id_stage, error = None):
         self.database_conn = self.engine.connect()
         try:
+            if error:
+                error = error.replace("'", "")
+
             query = "insert into integratordb.process (id_migration, id_stage, error_description, reprocess) values " \
                     f"('{item['id_globo']}', {id_stage}, '{error}', 0) on duplicate key update " \
                     f"id_stage = {id_stage}, error_description = '{error}', reprocess = 0"
