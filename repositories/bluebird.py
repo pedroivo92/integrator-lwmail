@@ -19,7 +19,7 @@ class BluebirdHandler:
             response = requests.put(url, json=payload, headers=header, timeout=int(PAYMENT_TIMEOUT))
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            error = str(e)
+            error = str(e.response.text)
             self.logger.error(msg=error)
             return False, error
 
@@ -33,7 +33,7 @@ class BluebirdHandler:
             response = requests.post(url, json=payload, headers=header, timeout=int(CART_TIMEOUT))
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            error = str(e)
+            error = str(e.response.text)
             self.logger.error(msg=error)
             return False, error
 
@@ -47,7 +47,7 @@ class BluebirdHandler:
             response = requests.post(url, json=payload, headers=header, timeout=int(CHECKOUT_TIMEOUT))
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            error = str(e)
+            error = str(e.response.text)
             #error_detail = error_json["detail"].replace("'", "")
             #error = f'{error_json["title"]} - {error_json["status"]}: {error_detail}'
             self.logger.error(msg=error)

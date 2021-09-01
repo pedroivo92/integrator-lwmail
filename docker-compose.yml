@@ -50,3 +50,153 @@ services:
       - CONTAINER_NUMBER=5
     env_file:
       - .env
+  lwmail_integrator_c6:
+    container_name: migration_service_c6
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=6
+    env_file:
+      - .env
+  lwmail_integrator_c7:
+    container_name: migration_service_c7
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=7
+    env_file:
+      - .env
+  lwmail_integrator_c8:
+    container_name: migration_service_c8
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=8
+    env_file:
+      - .env
+  lwmail_integrator_c9:
+    container_name: migration_service_c9
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=9
+    env_file:
+      - .env
+  lwmail_integrator_c10:
+    container_name: migration_service_c10
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=10
+    env_file:
+      - .env
+  lwmail_integrator_c11:
+    container_name: migration_service_c11
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=11
+    env_file:
+      - .env
+  lwmail_integrator_c12:
+    container_name: migration_service_c12
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=12
+    env_file:
+      - .env
+  lwmail_integrator_c13:
+    container_name: migration_service_c13
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=13
+    env_file:
+      - .env
+  lwmail_integrator_c14:
+    container_name: migration_service_c14
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=14
+    env_file:
+      - .env
+  lwmail_integrator_c15:
+    container_name: migration_service_c15
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=15
+    env_file:
+      - .env
+  lwmail_integrator_c16:
+    container_name: migration_service_c16
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=16
+    env_file:
+      - .env
+  lwmail_integrator_c17:
+    container_name: migration_service_c17
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=17
+    env_file:
+      - .env
+  lwmail_integrator_c18:
+    container_name: migration_service_c18
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=18
+    env_file:
+      - .env
+  lwmail_integrator_c19:
+    container_name: migration_service_c19
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=19
+    env_file:
+      - .env
+  lwmail_integrator_c20:
+    container_name: migration_service_c20
+    build: .
+    volumes:
+      - .:/opt/globo
+    restart: always
+    environment:
+      - CONTAINER_NUMBER=20
+    env_file:
+      - .env

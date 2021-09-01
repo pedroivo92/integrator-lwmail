@@ -60,6 +60,8 @@ class IntegratorService:
                             continue
 
                         item.update({'login': customer_info['login']})
+                        item.update({'customer_id': customer_info['customer_id']})
+
                         sucess = self._handler_bluebird_process(item, customer_info)
                         if not sucess:
                             continue
@@ -158,6 +160,8 @@ class IntegratorService:
                     continue
 
                 item.update({'login': customer_info['login']})
+                item.update({'customer_id': customer_info['customer_id']})
+
                 sucess = self._handler_bluebird_process(item, customer_info)
                 if not sucess:
                     continue

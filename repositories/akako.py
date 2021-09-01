@@ -21,7 +21,7 @@ class AkakoHandler:
             response.raise_for_status()
 
         except requests.exceptions.RequestException as e:
-            error = str(e)
+            error = str(e.response.text)
             self.logger.error(msg=error)
             return False, error
 
@@ -29,12 +29,14 @@ class AkakoHandler:
 
     def _create_akako_payload(self, item):
         name = item['name'].split(sep=" ")
+        last_name = name[0] if not name[1] else name[1] 
         uid = item['new_email_address'].split(sep="@")
+
         return {
             'uid': uid[0],
             'mail': item['new_email_address'],
             'first_name': name[0],
-            'last_name': name[1],
+            'last_name': last_name,
             'customer_number': item['customer_id'],
             'password': item['password'],
         }

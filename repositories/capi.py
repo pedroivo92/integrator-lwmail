@@ -54,7 +54,7 @@ class CapiHandler:
             response.raise_for_status()
 
         except requests.exceptions.RequestException as e:
-            error = str(e)
+            error = str(e.response.text)
             self.logger.error(msg=error)
             return False, error
 
@@ -68,7 +68,7 @@ class CapiHandler:
             response.raise_for_status()
 
         except requests.exceptions.RequestException as e:
-            error = str(e)
+            error = str(e.response.text)
             self.logger.error(msg=error)
             return False, error
 
