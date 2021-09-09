@@ -1,0 +1,2 @@
+2021-09-09 15:44:23,665 - INFO - -----SETUP INTEGRATOR_LWMAIL----
+2021-09-09 15:44:23,702 - INFO - CONNECTED TO MIGRATION REPOSITORY: <repositories.migrator_db.MigrationRepository object at 0xffffbb703b50> 
