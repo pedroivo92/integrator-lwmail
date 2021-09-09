@@ -287,6 +287,7 @@ class IntegratorService:
         
         item = self._get_new_email(item)
         self.migration_repository.update_migration_status(item, 3, item['new_email_address'])
+        self.migration_repository.delete_process_registry(item)
         self.logger.info(msg=f'id_globo: {item["id_globo"]} successfully migrated')
 
         return True

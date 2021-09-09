@@ -156,6 +156,17 @@ class MigrationRepository:
             raise e
         finally:
             self.database_conn.close()
+    
+    def delete_process_registry(self, item):
+        self.database_conn = self.engine.connect()
+        try:
+            query = f"DELETE FROM integratordb.process WHERE id_migration = '{item['id_globo']}'"
+            self.database_conn.execute(text(query))
+            
+        except Exception as e:
+            raise e
+        finally:
+            self.database_conn.close()
 
     def update_plan_informations(self, item, cart_id):
         self.database_conn = self.engine.connect()
