@@ -2,6 +2,7 @@ import random
 import requests
 from http import HTTPStatus
 from datetime import datetime
+from unidecode import unidecode
 
 from settings import *
 
@@ -43,8 +44,8 @@ class CapiHandler:
         return customer_information
 
     def generate_login(self, customer_info):
-        name = customer_info['name'].replace(" ", "").lower()
-        return f"{name[:11]}{random.randint(0,99999)}"
+        name = unidecode(customer_info['name'].replace(" ", "").lower())
+        return f"{name[:11]}{random.randint(0,9999999)}"
 
     def create_custumer(self, token, payload):
         header = {'Service-Ticket': token}
