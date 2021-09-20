@@ -16,7 +16,7 @@ class CapiHandler:
 
         if migration_item['person_type'] == 'PF':
             customer_information = {
-                'name': migration_item['name'],
+                'name': unidecode(migration_item['name']),
                 'login': migration_item['login'],
                 'password': migration_item['password'],
                 'person_type': 'natural',
@@ -25,7 +25,7 @@ class CapiHandler:
             }
         elif migration_item['person_type'] == 'PJ':
             customer_information = {
-                'name': migration_item['company_name'],
+                'name': unidecode(migration_item['company_name']),
                 'login': migration_item['login'],
                 'password': migration_item['password'],
                 'person_type': 'legal',
@@ -33,7 +33,7 @@ class CapiHandler:
                 'cnpj': migration_item['cnpj'],
                 'main_contact':{
                     'main': True,
-                    'name': migration_item['name'],
+                    'name': unidecode(migration_item['name']),
                     'rg': migration_item['rg'],
                     'cpf': migration_item['cpf']
                 }
