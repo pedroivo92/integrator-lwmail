@@ -16,7 +16,7 @@ class CapiHandler:
 
         if migration_item['person_type'] == 'PF':
             customer_information = {
-                'name': unidecode(migration_item['name']),
+                'name': unidecode(migration_item['name'][:70]),
                 'login': migration_item['login'],
                 'password': migration_item['password'],
                 'person_type': 'natural',
@@ -25,7 +25,7 @@ class CapiHandler:
             }
         elif migration_item['person_type'] == 'PJ':
             customer_information = {
-                'name': unidecode(migration_item['company_name']),
+                'name': unidecode(migration_item['company_name'][:70]),
                 'login': migration_item['login'],
                 'password': migration_item['password'],
                 'person_type': 'legal',
@@ -44,7 +44,8 @@ class CapiHandler:
         return customer_information
 
     def generate_login(self, customer_info):
-        name = unidecode(customer_info['name'].replace(" ", "").lower())
+        customer_name = unidecode(customer_info['name'].replace(" ", "").lower())
+        name = customer_name.replace(".", "")
         return f"{name[:11]}{random.randint(0,9999999)}"
 
     def create_custumer(self, token, payload):
