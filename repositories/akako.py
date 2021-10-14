@@ -31,7 +31,6 @@ class AkakoHandler:
         name = item['name'].split(sep=" ")
         last_name = name[0] if not name[1] else name[1] 
         uid = item['new_email_address'].split(sep="@")
-        
 
         return {
             'uid': uid[0],
