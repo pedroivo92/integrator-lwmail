@@ -277,14 +277,18 @@ class IntegratorService:
     
     def _handler_notification_process(self, item):
         emails = self.migration_repository.get_emails(item)
+
+        if item['id_status'] != 2:
+            self.migration_repository.update_migration_status(item, 2)
+
+        self.migration_repository.update_migration_process(item, 9, 'notification: control error')
+
         token_st = self._get_cached_token(str(AUTH_SERVICE_NOTIFICATION))
         sucess, error = self.notification_handler.notification_service(token_st, item, emails)
         if not sucess:
             self.migration_repository.update_migration_process(item, 9, error)
-            if item['id_status'] != 2:
-                self.migration_repository.update_migration_status(item, 2)
             return False
-        
+
         item = self._get_new_email(item)
         self.migration_repository.update_migration_status(item, 3, item['new_email_address'])
         self.migration_repository.delete_process_registry(item)
