@@ -211,12 +211,15 @@ class IntegratorService:
         customer_information['login'] = login
 
         token_capi_st = self._get_cached_token(str(AUTH_SERVICE_CAPI))
+        
+        self.logger.info(msg=f"CAPI - Create Customer for id_globo: {item['id_globo']}")
         customer_created, error = self.capi_handler.create_custumer(token_capi_st, customer_information)
         if error:
             self.migration_repository.update_migration_process(item, 1, error)
             self.migration_repository.update_migration_status(item, 2)
             return False
 
+        self.logger.info(msg=f"CAPI - Get Customer ID for id_globo: {item['id_globo']}")
         customer_id, error = self.capi_handler.get_customer_id(token_capi_st, customer_information['login'])
         if error:
             self.migration_repository.update_migration_process(item, 2, error)
@@ -266,6 +269,7 @@ class IntegratorService:
         item = self._get_new_email(item)
 
         token_akako_st = self._get_cached_token(str(AUTH_SERVICE_AKAKO))
+        self.logger.info(msg=f"AKAKO - Create Akako Customer for id_globo: {item['id_globo']}")
         sucess, error = self.akako_handler.create_akako_custumer(token_akako_st, item)
         if not sucess:
             self.migration_repository.update_migration_process(item, 6, error)
@@ -284,6 +288,7 @@ class IntegratorService:
         self.migration_repository.update_migration_process(item, 9, 'notification: control error')
 
         token_st = self._get_cached_token(str(AUTH_SERVICE_NOTIFICATION))
+        self.logger.info(msg=f"NOTIFICATION - Notification process for id_globo: {item['id_globo']}")
         sucess, error = self.notification_handler.notification_service(token_st, item, emails)
         if not sucess:
             self.migration_repository.update_migration_process(item, 9, error)
@@ -297,6 +302,8 @@ class IntegratorService:
         return True
 
     def _handler_globomail_procedures(self, item):
+        self.logger.info(msg=f"GLOBOMAIL PROCEDURE - Globomail procedure for id_globo: {item['id_globo']}")
+        
         if item['alias_email_address'] and item['alias_email_address'] != "":
             result = self.globomail_repository.call_homon_procedure(item)
         else:
@@ -312,6 +319,8 @@ class IntegratorService:
         return True
 
     def _handler_roundcube_procedures(self, item):
+        self.logger.info(msg=f"ROUNDCUBE PROCEDURE - Roundcube procedure for id_globo: {item['id_globo']}")
+        
         if item['alias_email_address'] and item['alias_email_address'] != "":
             result = self.roundcube_repository.call_homon_procedure(item)
         else:

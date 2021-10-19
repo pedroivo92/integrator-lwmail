@@ -81,7 +81,13 @@ class MigrationRepository:
             emails = self.database_conn.execute(select(text(query))).fetchall()
             if emails:
                 customer_info['emails'] = []
-                for email in emails:
+                for email in emails:                    
+                    domain = email['email_address'].split("@")
+
+                    if domain[1] == "g.globo":
+                        domain[1] = "g.globo.com"
+                        email['email_address'] = f'{domain[0]}@{domain[1]}'
+
                     customer_info['emails'].append(
                         {
                             'address': email['email_address'],
