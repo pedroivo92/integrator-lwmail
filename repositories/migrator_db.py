@@ -79,6 +79,7 @@ class MigrationRepository:
             query = "email_address, main, confirmed from integratordb.email " \
                     f"where id_migration = '{item_migration['id_globo']}'"
             emails = self.database_conn.execute(select(text(query))).fetchall()
+            emails = dict(emails)
             if emails:
                 customer_info['emails'] = []
                 for email in emails:                    
