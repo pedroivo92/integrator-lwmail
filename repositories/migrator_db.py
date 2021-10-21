@@ -79,19 +79,19 @@ class MigrationRepository:
             query = "email_address, main, confirmed from integratordb.email " \
                     f"where id_migration = '{item_migration['id_globo']}'"
             emails = self.database_conn.execute(select(text(query))).fetchall()
-            emails = dict(emails)
             if emails:
                 customer_info['emails'] = []
                 for email in emails:                    
                     domain = email['email_address'].split("@")
 
+                    email_address = email['email_address']
                     if domain[1] == "g.globo":
                         domain[1] = "g.globo.com"
-                        email['email_address'] = f'{domain[0]}@{domain[1]}'
+                        email_address = f'{domain[0]}@{domain[1]}'
 
                     customer_info['emails'].append(
                         {
-                            'address': email['email_address'],
+                            'address': email_address,
                             'main': True if email['main'] == 1 else False,
                             'confirmed': True if email['confirmed'] == 1 else False
                         }
