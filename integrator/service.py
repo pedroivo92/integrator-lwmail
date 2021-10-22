@@ -287,6 +287,8 @@ class IntegratorService:
 
         self.migration_repository.update_migration_process(item, 9, 'notification: control error')
 
+        item = self._get_new_email(item)
+        
         token_st = self._get_cached_token(str(AUTH_SERVICE_NOTIFICATION))
         self.logger.info(msg=f"NOTIFICATION - Notification process for id_globo: {item['id_globo']}")
         sucess, error = self.notification_handler.notification_service(token_st, item, emails)
@@ -294,7 +296,6 @@ class IntegratorService:
             self.migration_repository.update_migration_process(item, 9, error)
             return False
 
-        item = self._get_new_email(item)
         self.migration_repository.update_migration_status(item, 3, item['new_email_address'])
         self.migration_repository.delete_process_registry(item)
         self.logger.info(msg=f'id_globo: {item["id_globo"]} successfully migrated')
