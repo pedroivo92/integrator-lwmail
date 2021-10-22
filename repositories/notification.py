@@ -25,6 +25,7 @@ class NotificationHandler:
         return True, None
 
     def _create_notification_payload(self, item, emails):
+        new_email = item['new_email_address']
         email_list = [item['current_email_address']]
         for email in emails:
             email_list.append(email['email_address'])
@@ -34,7 +35,7 @@ class NotificationHandler:
             'data': {
                 'login': item['login'],
                 'channels': ['email'],
-                'customer_workbench_uri': 'https://centraldocliente.locaweb.com.br',
+                'customer_workbench_uri': self._get_notification_mensenger(new_email),
                 'assets_uri': 'https://assets.locaweb.com.br'
             },
             'recipients': [{
@@ -43,3 +44,15 @@ class NotificationHandler:
             }],
             'channels': ['email']
         }
+    
+    def _get_notification_mensenger(self, email):
+        return "</a> https://centraldocliente.locaweb.com.br <br> <br> Seu Globomail foi migrado " \ 
+               "com sucesso para o LWMAIL.<br> <br> Para acessar sua caixa de e-mails Lwmail: " \
+               "<br><br> 1. Entre em https://lwmail.com.br/ <br> 2. " \
+               f" Faça Login com {email} <br> 3. Utilize a senha que definiu no " \
+               "momento da sua escolha. <br><br> Se precisar redefinir a sua senha, " \
+               "na página https://lwmail.com.br/ clique em: Esqueci Minha Senha. "
+               "<br> <br> Se precisar de ajuda para configurar seu software de email ou "
+               "Smartphone "
+               "<a href=`https://ajuda.locaweb.com.br/wiki/como-configurar-o-e-mail-no-windows-lwmail/`>Clique aqui</a> <br> <br> " \
+               "E agora você tem um login exclusivo para a Central do Cliente Locaweb.<br> <br>"
