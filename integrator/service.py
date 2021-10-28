@@ -210,6 +210,8 @@ class IntegratorService:
         login = self.capi_handler.generate_login(customer_information)
         customer_information['login'] = login
 
+        self.migration_repository.update_migration_process(item, 1, 'CAPI: control error')
+        
         token_capi_st = self._get_cached_token(str(AUTH_SERVICE_CAPI))
         
         self.logger.info(msg=f"CAPI - Create Customer for id_globo: {item['id_globo']}")
@@ -268,6 +270,8 @@ class IntegratorService:
     def _handler_akako_process(self, item):
         item = self._get_new_email(item)
 
+        self.migration_repository.update_migration_process(item, 6, 'AKAKO: control error')
+        
         token_akako_st = self._get_cached_token(str(AUTH_SERVICE_AKAKO))
         self.logger.info(msg=f"AKAKO - Create Akako Customer for id_globo: {item['id_globo']}")
         sucess, error = self.akako_handler.create_akako_custumer(token_akako_st, item)
