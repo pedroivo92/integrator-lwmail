@@ -53,8 +53,8 @@ class NotificationHandler:
                "momento da sua escolha. <br><br> Se precisar redefinir a sua senha, " \
                "na página https://lwmail.com.br/ clique em: Esqueci Minha Senha. " \
                "<br> <br> Veja o vídeo tutorial de como acessar seu LWMAIL " \
-               "<a href='https://ajuda.locaweb.com.br/wiki/como-acessar-o-webmail-lwmail/'>Clique aqui</a> <br> <br> " \
-               "<br> <br> Se precisar de ajuda para configurar seu software de email ou " \
+               "<a href='https://ajuda.locaweb.com.br/wiki/como-acessar-o-webmail-lwmail/'>Clique aqui</a> <br>" \
+               "<br> Se precisar de ajuda para configurar seu software de email ou " \
                "Smartphone " \
-               "<a href='https://ajuda.locaweb.com.br/wiki/como-configurar-o-e-mail-no-windows-lwmail/'>Clique aqui</a> <br> <br> " \
+               "<a href='https://ajuda.locaweb.com.br/wiki/como-configurar-o-e-mail-no-windows-lwmail/'>Clique aqui</a> <br>" \
                "E agora você tem um login exclusivo para a Central do Cliente Locaweb.<br> <br>"
